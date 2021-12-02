@@ -444,7 +444,7 @@ void imprime_dado (Tipo_Dado* dt)
 {
     if (dt == NULL)
         return;
-    printf("%f, %f, %f, TOTAL: %d\n", dt->x, dt->y, dt->z, dt->cost);
+    printf("%.5f %.5f %.5f TOTAL:%d\n", dt->x, dt->y, dt->z, dt->cost);
     return;
 }
 
@@ -456,25 +456,10 @@ void imprime_lista (Lista* li)
         return;
     while (no != NULL)
     {
-        printf("%f %f %f %d %d %d %d\n",no->dado.x, no->dado.y, no->dado.z, no->dado.r, no->dado.g, no->dado.b, no->dado.id);
+        printf("%.5f, %.5f, %.5f, %d, %d, %d, %d\n",no->dado.x, no->dado.y, no->dado.z, no->dado.r, no->dado.g, no->dado.b, no->dado.id);
         no = no->prox;
     }
     return;
-}
-
-
-void imprime_lista_DBUG (Lista* li)
-{
-    Elem* no = *li;
-
-    if (li == NULL)
-        return;
-    while (no != NULL)
-    {
-        printf("%f %f %f %d %d %d %d custo: %d\n",no->dado.x, no->dado.y, no->dado.z, no->dado.r, no->dado.g, no->dado.b, no->dado.id, no->dado.cost);
-        no = no->prox;
-    }
-    printf("-------------- FIM LISTA -----------------\n");
 }
 
 void imprime_TOT (Lista* LI, Lista* LF, Lista* LX) {

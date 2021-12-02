@@ -4,6 +4,8 @@
 
 #include "LDED.h"
 
+#define arquivo "dados3d.txt"
+
 void selectfunction (char* entry, Lista *LX, Lista *LY, Lista *LZ, Lista *LI, Lista *LF);
 
 int main()
@@ -19,7 +21,7 @@ int main()
         printf ("Faill to alocate memory for 'dado'\n");
         exit (-1);
     } 
-    FILE *fp = fopen ("dados3d.txt", "r"); 
+    FILE *fp = fopen (arquivo, "r"); 
     if (fp == NULL ) {
         printf ("Failed to open dados3d.txt\n");
         exit (-1);
@@ -56,52 +58,53 @@ int main()
 }
 
 void selectfunction (char* cmd, Lista *LX, Lista *LY, Lista *LZ, Lista *LI, Lista *LF) {
-    char *command = strupr(cmd);
-    if (!strcmp(command, "LX")) {
+    if (!strcmp(cmd, "LX")) {
         imprime_lista (LX);
         return;
-    } else if (!strcmp(command, "LY")) {
+    } else if (!strcmp(cmd, "LY")) {
         imprime_lista (LY);
         return;
-    } else if (!strcmp(command, "LZ")) {
+    } else if (!strcmp(cmd, "LZ")) {
         imprime_lista (LZ);
         return;
-    } else if (!strcmp(command, "LI")) {
+    } else if (!strcmp(cmd, "LI")) {
         imprime_lista (LI);
         return;
-    } else if (!strcmp(command, "LZ")) {
+    } else if (!strcmp(cmd, "LZ")) {
         imprime_lista (LZ);
         return;
-    } else if (!strcmp (command, "LI")) {
+    } else if (!strcmp (cmd, "LI")) {
         imprime_lista (LI);
         return;
-    } else if (!strcmp(command, "LF")) {
+    } else if (!strcmp(cmd, "LF")) {
         imprime_lista (LF);
         return;
-    } else if (!strcmp (command, "TOT")) {
+    } else if (!strcmp (cmd, "TOT")) {
         imprime_TOT (LI, LF, LX);
         return;
-    } else if (!strcmp (command, "PZ")) {
+    } else if (!strcmp (cmd, "PZ")) {
         procura_z_mais_prox (LZ);
         return;
-    } else if (!strcmp (command, "PI")) {
+    } else if (!strcmp (cmd, "PI")) {
         procura_z_mais_prox (LI);
         return;
-    } else if (!strcmp (command, "ID")) {
+    } else if (!strcmp (cmd, "ID")) {
         int id;
         scanf ("%d", &id);
         Lista *li_ID = cria_lista ();
         seleciona_dado_ID (LX, li_ID, id);
         imprime_lista (li_ID);
+        libera_lista(li_ID);
         return;
-    } else if (!strcmp (command, "CUT")) {
+    } else if (!strcmp (cmd, "CUT")) {
         mmCoordenadas coo; 
         scanf ("%f %f %f %f %f %f", &coo.min_X, &coo.min_Y, &coo.min_Z, &coo.max_X, &coo.max_Y, &coo.max_Z);
         Lista *li_Coo = cria_lista ();
         seleciona_dado_coordenadas (LX, li_Coo, coo);
         imprime_lista (li_Coo);
+        libera_lista(li_Coo);
         return;
-    }  else {
+    } else {
         return;
     }
 }

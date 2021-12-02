@@ -37,7 +37,6 @@ int consulta_lista_pos(Lista* li, int pos, Tipo_Dado *dt);
 int calcula_custo_total_lista (Lista* li);
 void imprime_dado (Tipo_Dado* dt);
 void imprime_lista (Lista* li);
-void imprime_lista_DBUG (Lista* li);
 void imprime_TOT (Lista* LI, Lista* LF, Lista* LX);
 int insere_lista_final(Lista* li, Tipo_Dado dt);
 int insere_lista_inicio(Lista* li, Tipo_Dado dt);
