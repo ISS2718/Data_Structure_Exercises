@@ -286,23 +286,21 @@ int insere_lista_ordenada_Z (Lista* li, Tipo_Dado dt)
     }
 }
 
-int procura_z_mais_prox (Lista* li, const int ord_z)
+int procura_z_mais_prox (Lista* li)
 {   
     int cost = 1;
     if (li == NULL)
         return ERRO;
     if ((*li) == NULL)
         return ERRO;
-    Tipo_Dado *dado = (Tipo_Dado*) malloc(sizeof(Tipo_Dado));
-    if (dado == NULL)
-        return ERRO;
-    *dado = (*li)->dado;
-    if (!ord_z) {
+    Tipo_Dado dado = (*li)->dado;
+    
+    if (!verifica_ordenacao_z(li)) {
         Elem *atual = *li;
         while (atual != NULL)
 	    {   
-            if (atual->dado.z < dado->z) {
-                *dado = atual->dado;
+            if (atual->dado.z < dado.z) {
+                dado = atual->dado;
             }
 
             atual = atual->prox;
@@ -312,15 +310,16 @@ int procura_z_mais_prox (Lista* li, const int ord_z)
         }
     }
 
-    if (dado->z != (*li)->dado.z)
+    if (dado.z != (*li)->dado.z)
 	{ 
-        dado->cost = cost;
+        dado.cost = cost;
     } else {
-        dado->cost = 1;
+        dado.cost = 1;
     }
-    imprime_dado(dado); 
+    imprime_dado(&dado); 
     return OK;
 }
+
 /*
 int remove_lista(Lista* li, Tipo_Dado dt)
 {   //TERMINAR
@@ -384,6 +383,41 @@ int remove_lista_final(Lista* li)
     return OK;
 }
 
+int seleciona_dado_coordenadas (Lista *li, Lista* li_Coo, mmCoordenadas coo) {
+    if (li == NULL)
+        return ERRO;
+    Elem *atual = *li;
+
+    while (atual != NULL)
+	{   
+        if ((atual->dado.x >= coo.min_X && atual->dado.x <= coo.max_X) 
+            && (atual->dado.y >= coo.min_Y && atual->dado.y <= coo.max_Y) 
+            && (atual->dado.y >= coo.min_Y && atual->dado.y <= coo.max_Y)) {
+            
+            insere_lista_final (li_Coo, atual->dado);
+        }
+        atual = atual->prox;
+    }
+
+    return OK;
+}
+
+int seleciona_dado_ID (Lista* li, Lista* li_ID, int ID) {
+    if (li == NULL)
+        return ERRO;
+    Elem *atual = *li;
+
+    while (atual != NULL)
+	{   
+        if (atual->dado.id == ID) {
+            insere_lista_final (li_ID, atual->dado);
+        }
+        atual = atual->prox;
+    }
+
+    return OK;
+}
+
 int tamanho_lista(Lista* li)
 {
     if (li == NULL)
@@ -397,34 +431,46 @@ int tamanho_lista(Lista* li)
     return cont;
 }
 
-/*
 int verifica_ordenacao_z (Lista* li) 
 {
-    if (li == NULL)
-        return ERRO;    
-    if ((*li) != NULL)
+    if (*li == NULL)
+        return ERRO;
+
+    Elem *primeiro = *li, *atual = primeiro->prox;
+
+    int size_list = tamanho_lista(li),
+        cost_t_li = calcula_custo_total_lista (li),
+        cost_in_f = 0;
+
+    for (int i = 0; i <= size_list; i++) {
+        cost_in_f += i;
+    }
+
+    if (cost_t_li > size_list && cost_t_li < cost_in_f)
     {
-        Elem *primeiro = *li, *atual = (*li)->prox;
-        while (atual != NULL && atual->dado.z < primeiro->dado.z)
-		{
-            atual = atual->prox;
+        while (atual != NULL && atual->dado.z >= primeiro->dado.z)
+		{   
+            if (atual->dado.z == primeiro->dado.z) {
+                while (atual != NULL && atual->dado.z == primeiro->dado.z && atual->dado.x > primeiro->dado.x)
+		        {
+                    atual = atual->prox;
+                }
+                while (atual != NULL && atual->dado.z == primeiro->dado.z && atual->dado.x == primeiro->dado.x && atual->dado.y > primeiro->dado.y)
+		        {
+                    atual = atual->prox;
+                }
+            } else {
+                atual = atual->prox;
+            }
         }
-        while (atual != NULL && atual->dado.z == primeiro->dado.z && atual->dado.x < primeiro->dado.x)
-		{
-            atual = atual->prox;
-        }
-        while (atual != NULL && atual->dado.z == primeiro->dado.z && atual->dado.x == primeiro->dado.x && atual->dado.y < primeiro->dado.y)
-		{
-            atual = atual->prox;
-        }
+        
         if (atual == NULL)
 		{  
-            return OK;
+            return VERDADEIRO;
         }
-        return ERRO;
     }
+    return FALSO;    
 }
-*/
 
 int lista_cheia(Lista* li)
 {
@@ -442,7 +488,6 @@ int lista_vazia(Lista* li)
 
 void imprime_dado (Tipo_Dado* dt)
 {
-
     if (dt == NULL)
         return;
     printf("%f, %f, %f, TOTAL: %d\n", dt->x, dt->y, dt->z, dt->cost);
