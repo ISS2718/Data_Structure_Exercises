@@ -1,6 +1,7 @@
 *.o
-*.exe
 *.pdf
 *.rar
+*.zip
+?.exe
 **/.vscode
 **/bin
