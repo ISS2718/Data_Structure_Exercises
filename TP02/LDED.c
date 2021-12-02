@@ -60,25 +60,6 @@ int calcula_custo_total_lista (Lista* li) {
     return cost;
 }
 
-/*
-int consulta_lista_dado(Lista* li, Tipo_Dado dt, Elem **el)
-{
-    if (li == NULL)
-        return 0;
-    Elem *no = *li;
-    while (no != NULL && no->dado != dt){
-        no = no->prox;
-    }
-    if (no == NULL)
-        return ERRO;
-    else
-	{
-        *el = no;
-        return OK;
-    }
-}
-*/
-
 int insere_lista_final(Lista* li, Tipo_Dado dt)
 {   
     Elem *no;
@@ -319,33 +300,6 @@ int procura_z_mais_prox (Lista* li)
     imprime_dado(&dado); 
     return OK;
 }
-
-/*
-int remove_lista(Lista* li, Tipo_Dado dt)
-{   //TERMINAR
-    if (li == NULL)
-        return ERRO;
-    if ((*li) == NULL)//lista vazia
-        return ERRO;
-    Elem *no = *li;
-    while (no != NULL && no->dado != dt){
-        no = no->prox;
-    }
-    if (no == NULL)//n�o encontrado
-        return ERRO;
-
-    if (no->ant == NULL)//remover o primeiro?
-        *li = no->prox;
-    else
-        no->ant->prox = no->prox;
-
-    if (no->prox != NULL)//n�o � o �ltimo?
-        no->prox->ant = no->ant;
-
-    free(no);
-    return OK;
-}
-*/
 
 int remove_lista_inicio(Lista* li)
 {
