@@ -3,4 +3,5 @@
 *.rar
 *.zip
 *.exe
+*.cbp
 **/.vscode
