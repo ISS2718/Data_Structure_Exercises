@@ -3,5 +3,5 @@
 *.rar
 *.zip
 *.exe
-*.cbp
 **/.vscode
+*.cbp
