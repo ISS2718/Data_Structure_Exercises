@@ -24,17 +24,17 @@ int main()
     } 
     FILE *fp = fopen (arquivo, "r"); 
     if (fp == NULL) {
-        printf ("Failed to open dados3d.txt\n");
+        printf ("Failed to open %s\n", arquivo);
         exit (-1);
     }
     char* cidade = (char*) malloc (30 * (sizeof (char)));
     if (cidade== NULL) {
-        printf ("Failed to open dados3d.txt\n");
+        printf ("Faill to alocate memory for 'cidade'\n");
         exit (-1);
     }
     char* estado = (char*) malloc (5 * (sizeof (char)));;
     if (estado == NULL) {
-        printf ("Failed to open dados3d.txt\n");
+        printf ("Faill to alocate memory for 'estado'\n");
         exit (-1);
     }
     int cmd;
